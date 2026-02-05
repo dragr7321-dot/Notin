@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Untuk Notin Sayang</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --pink-deep: #ff4d94; --pink-soft: #ffb3d1; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #fff0f3; color: #333; overflow-x: hidden; }
         
-        /* Background Bergerak */
         .bg-animate {
             position: fixed; width: 100vw; height: 100vh;
             background: linear-gradient(-45deg, #fff0f3, #ffdde1, #fbc2eb, #a18cd1);
@@ -18,161 +17,139 @@
         }
         @keyframes gradientBG { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-        .floating-heart { position: fixed; color: var(--pink-deep); opacity: 0.6; pointer-events: none; z-index: 1; animation: floatUp linear infinite; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-
         /* Welcome Screen */
-        #welcome-screen { position: fixed; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; transition: 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
-        .glass-box { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5); }
+        #welcome-screen { position: fixed; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; transition: 1.5s; }
+        .glass-box { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
         .welcome-title { font-family: 'Dancing Script'; font-size: 3rem; color: var(--pink-deep); margin-bottom: 20px; }
         
-        .input-group { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; }
-        .input-group input { width: 70px; padding: 12px; border-radius: 12px; border: 1px solid var(--pink-soft); text-align: center; outline: none; font-weight: bold; }
-        .btn-check { padding: 12px 25px; background: var(--pink-deep); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; }
+        /* Tombol Musik (Muncul di klik ke-9) */
+        #music-btn {
+            display: none; background: #25d366; color: white; border: none;
+            padding: 15px; border-radius: 15px; font-weight: bold; width: 100%;
+            margin-top: 15px; cursor: pointer; animation: pulse 1.5s infinite;
+        }
 
-        #secret-button-area { display: none; margin-top: 20px; animation: fadeIn 1s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-sayang { padding: 18px 45px; background: var(--pink-deep); color: white; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; animation: pulse 2s infinite; box-shadow: 0 10px 20px rgba(255, 77, 148, 0.3); }
+        .btn-check, .btn-sayang { padding: 12px 25px; background: var(--pink-deep); color: white; border: none; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; }
+        .btn-sayang { margin-top: 10px; animation: pulse 2s infinite; }
+        
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         /* Main Content */
-        #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; z-index: 5; opacity: 0; transition: 2s; }
-        .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; font-weight: bold; }
+        #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; opacity: 0; transition: 2s; }
+        .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; }
+        .anniv-card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 50px; border: 2px solid white; }
         
-        .anniv-card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; border: 2px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 50px; }
-        #timer { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
-        .time-box { font-size: 1.5rem; font-weight: 700; color: var(--pink-deep); }
-        .time-box span { display: block; font-size: 0.7rem; color: #666; }
-
-        .quote-item { font-family: 'Playfair Display', serif; font-size: 1.6rem; text-align: center; margin: 120px 0; opacity: 0; transition: 1.5s; color: #000; font-weight: bold; transform: translateY(30px); }
-        .quote-item.reveal { opacity: 1; transform: translateY(0); }
-
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 60px; }
-        .photo-item { aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); opacity: 0; transition: 1s; transform: scale(0.9); }
-        .photo-item.reveal { opacity: 1; transform: scale(1); animation: floatPhoto 4s ease-in-out infinite alternate; }
-        @keyframes floatPhoto { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .photo-item { aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 4px solid white; opacity: 0; transition: 1s; }
+        .photo-item.reveal { opacity: 1; transform: scale(1); }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-        
-        footer { padding: 80px 0; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--pink-deep); font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="bg-animate"></div>
-    
-    <audio id="mySong" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+
+    <audio id="mySong" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
     <div id="welcome-screen">
         <div class="glass-box">
             <h1 class="welcome-title">Notin Sayang ❤️</h1>
+            
             <div id="quiz-area">
-                <p style="font-size: 0.9rem; margin-bottom: 15px; color: #555;">Kapan ulang tahun aku?</p>
-                <div class="input-group">
-                    <input type="number" id="tgl" placeholder="Tgl">
-                    <input type="number" id="bln" placeholder="Bln">
-                    <input type="number" id="thn" placeholder="Thn">
-                </div>
-                <button class="btn-check" onclick="cekJawaban()">Cek Jawaban</button>
+                <p style="margin-bottom: 15px;">Kapan ulang tahun aku?</p>
+                <input type="number" id="tgl" placeholder="Tgl" style="width:50px; padding:10px;">
+                <input type="number" id="bln" placeholder="Bln" style="width:50px; padding:10px;">
+                <input type="number" id="thn" placeholder="Thn" style="width:70px; padding:10px;">
+                <button class="btn-check" onclick="cekJawaban()" style="margin-top:10px;">Jawab</button>
             </div>
-            <div id="secret-button-area">
-                <p style="color: #444; font-size: 0.8rem; margin-bottom: 15px;">Jawaban benar sayang ❤️</p>
-                <button class="btn-sayang" onclick="startSurprise()">KLIK 10 KALI</button>
-                <p id="counter" style="margin-top: 15px; color: var(--pink-deep); font-weight: bold;">Kejutan menantimu!</p>
+
+            <div id="secret-area" style="display:none;">
+                <p id="msg">Jawaban Benar! ❤️</p>
+                <button id="music-btn" onclick="playMusic()">🎵 AKTIFKAN MUSIK DULU 🎵</button>
+                
+                <button class="btn-sayang" id="btn-main" onclick="startSurprise()">KLIK 10 KALI</button>
+                <p id="counter" style="margin-top: 10px; font-weight: bold; color: var(--pink-deep);"></p>
             </div>
         </div>
     </div>
 
     <div id="main-content">
         <div class="signature-top">From Andra to Notin</div>
-        
         <div class="anniv-card">
-            <p style="font-size: 0.8rem; font-weight: 700;">KITA SUDAH BERSAMA SELAMA</p>
-            <div id="timer">
-                <div class="time-box"><div id="days">00</div><span>Hari</span></div>
-                <div class="time-box"><div id="hours">00</div><span>Jam</span></div>
-                <div class="time-box"><div id="mins">00</div><span>Menit</span></div>
-                <div class="time-box"><div id="secs">00</div><span>Detik</span></div>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.7rem; color: #888;">Sejak 21 Maret 2025</p>
+            <p>KITA SUDAH BERSAMA SELAMA</p>
+            <h2 id="timer-display" style="color:var(--pink-deep); margin:15px 0;">Menghitung...</h2>
+            <p style="font-size: 0.7rem; color: #888;">Sejak 21 Maret 2025</p>
         </div>
-
-        <div class="quote-item">"Kamu adalah rumah ternyaman tempatku pulang."</div>
-        <div class="quote-item">"Dalam diam, namamu selalu kusemoga-kan."</div>
-        <div class="quote-item">"Cinta itu kamu, tanpa perlu alasan."</div>
-        <div class="quote-item">"Aku mencintaimu lebih dari hari kemarin, Notin."</div>
-
-        <h2 style="text-align: center; font-family: 'Dancing Script'; color: var(--pink-deep); font-size: 3rem; margin: 60px 0 20px;">Memori Kita</h2>
-        
         <div class="photo-grid">
-            <div class="photo-item"><img src="1.jpg"></div>
-            <div class="photo-item"><img src="2.jpg"></div>
-            <div class="photo-item"><img src="3.jpg"></div>
-            <div class="photo-item"><img src="4.jpg"></div>
-            <div class="photo-item"><img src="5.jpg"></div>
-            <div class="photo-item"><img src="6.jpg"></div>
-            <div class="photo-item"><img src="7.jpg"></div>
-            <div class="photo-item"><img src="8.jpg"></div>
-            <div class="photo-item"><img src="9.jpg"></div>
-            <div class="photo-item"><img src="10.jpg"></div>
+            <div class="photo-item"><img src="1.jpg"></div><div class="photo-item"><img src="2.jpg"></div>
+            <div class="photo-item"><img src="3.jpg"></div><div class="photo-item"><img src="4.jpg"></div>
+            <div class="photo-item"><img src="5.jpg"></div><div class="photo-item"><img src="6.jpg"></div>
+            <div class="photo-item"><img src="7.jpg"></div><div class="photo-item"><img src="8.jpg"></div>
+            <div class="photo-item"><img src="9.jpg"></div><div class="photo-item"><img src="10.jpg"></div>
         </div>
-
-        <footer>From Andra to Notin</footer>
+        <footer style="text-align:center; padding:50px; font-family:'Dancing Script'; font-size:2rem; color:var(--pink-deep);">I Love You Notin</footer>
     </div>
 
     <script>
         function cekJawaban() {
-            const t = document.getElementById('tgl').value;
-            const b = document.getElementById('bln').value;
-            const th = document.getElementById('thn').value;
-            if(t == "23" && b == "5" && th == "2008") {
+            if(document.getElementById('tgl').value == "23" && document.getElementById('bln').value == "5" && document.getElementById('thn').value == "2008") {
                 document.getElementById('quiz-area').style.display = 'none';
-                document.getElementById('secret-button-area').style.display = 'block';
-            } else { alert("Jawaban salah sayang! 🥺"); }
+                document.getElementById('secret-area').style.display = 'block';
+            } else { alert("Salah sayang! 🥺"); }
         }
 
-        setInterval(() => {
-            const h = document.createElement('div'); h.className = 'floating-heart'; h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw'; h.style.animationDuration = Math.random() * 3 + 5 + 's';
-            document.body.appendChild(h); setTimeout(() => h.remove(), 7000);
-        }, 500);
-
-        const startDate = new Date("March 21, 2025 00:00:00").getTime();
-        setInterval(() => {
-            const diff = new Date().getTime() - startDate;
-            document.getElementById("days").innerText = Math.floor(diff / 86400000);
-            document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000);
-            document.getElementById("mins").innerText = Math.floor((diff % 3600000) / 60000);
-            document.getElementById("secs").innerText = Math.floor((diff % 60000) / 1000);
-        }, 1000);
-
         let clicks = 0;
+        let musicStarted = false;
+
+        function playMusic() {
+            document.getElementById('mySong').play();
+            musicStarted = true;
+            document.getElementById('music-btn').style.display = 'none';
+            document.getElementById('msg').innerText = "Musik Jalan! Klik terakhir sekarang ❤️";
+            document.getElementById('btn-main').style.display = 'block';
+        }
+
         function startSurprise() {
             clicks++;
-            const song = document.getElementById('mySong');
-            
-            // Pancing izin audio di klik pertama
-            if(clicks === 1) { song.play().then(() => song.pause()).catch(e => {}); }
-
-            if (clicks < 10) { 
-                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`; 
-            }
-            else {
-                song.play(); // Putar di klik ke-10
+            if (clicks < 9) {
+                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`;
+            } 
+            else if (clicks === 9) {
+                // Klik ke-9: Sembunyikan tombol utama, munculkan tombol musik
+                document.getElementById('btn-main').style.display = 'none';
+                document.getElementById('counter').innerText = "";
+                document.getElementById('music-btn').style.display = 'block';
+                document.getElementById('msg').innerText = "Eitss, aktifkan musiknya dulu baru bisa lanjut!";
+            } 
+            else if (clicks === 10) {
+                if(!musicStarted) {
+                    alert("Pencet tombol hijau dulu sayang! 🎵");
+                    clicks = 9;
+                    return;
+                }
+                // Klik ke-10: Buka semua
                 document.getElementById('welcome-screen').style.transform = 'translateY(-100%)';
-                document.getElementById('welcome-screen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('welcome-screen').style.display = 'none';
-                    const main = document.getElementById('main-content');
-                    main.style.display = 'block';
-                    setTimeout(() => { main.style.opacity = '1'; }, 100);
-                    document.body.style.overflowY = 'auto';
+                    document.getElementById('main-content').style.display = 'block';
+                    setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; }, 100);
                 }, 1000);
             }
         }
 
+        // Timer & Scroll Reveal
+        const startDate = new Date("March 21, 2025 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById("timer-display").innerText = `${d} Hari ${h} Jam ${m} Menit ${s} Detik`;
+        }, 1000);
+
         window.addEventListener('scroll', () => {
-            document.querySelectorAll('.quote-item, .photo-item').forEach(el => {
+            document.querySelectorAll('.photo-item').forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('reveal');
             });
         });
