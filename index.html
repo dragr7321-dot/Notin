@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #fff0f3; color: #333; overflow-x: hidden; }
         
-        /* Background Bergerak Halus */
+        /* Background Bergerak */
         .bg-animate {
             position: fixed; width: 100vw; height: 100vh;
             background: linear-gradient(-45deg, #fff0f3, #ffdde1, #fbc2eb, #a18cd1);
@@ -21,31 +21,28 @@
         .floating-heart { position: fixed; color: var(--pink-deep); opacity: 0.6; pointer-events: none; z-index: 1; animation: floatUp linear infinite; }
         @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
 
-        /* Welcome Screen Styling */
+        /* Welcome Screen */
         #welcome-screen { position: fixed; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; transition: 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
-        .glass-box { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5); animation: zoomIn 0.8s ease-out; }
-        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
+        .glass-box { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5); }
         .welcome-title { font-family: 'Dancing Script'; font-size: 3rem; color: var(--pink-deep); margin-bottom: 20px; }
+        
         .input-group { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; }
         .input-group input { width: 70px; padding: 12px; border-radius: 12px; border: 1px solid var(--pink-soft); text-align: center; outline: none; font-weight: bold; }
-        .btn-check { padding: 12px 25px; background: var(--pink-deep); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
-        .btn-check:hover { background: #e63982; }
+        .btn-check { padding: 12px 25px; background: var(--pink-deep); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; }
 
         #secret-button-area { display: none; margin-top: 20px; animation: fadeIn 1s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .btn-sayang { padding: 18px 45px; background: var(--pink-deep); color: white; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; animation: pulse 2s infinite; box-shadow: 0 10px 20px rgba(255, 77, 148, 0.3); }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 148, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 77, 148, 0); } 100% { transform: scale(1); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Main Content Styling */
+        /* Main Content */
         #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; z-index: 5; opacity: 0; transition: 2s; }
-        .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; font-weight: bold; animation: slideDown 1.5s ease; }
-        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
+        .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; font-weight: bold; }
+        
         .anniv-card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; text-align: center; border: 2px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 50px; }
         #timer { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
         .time-box { font-size: 1.5rem; font-weight: 700; color: var(--pink-deep); }
-        .time-box span { display: block; font-size: 0.7rem; color: #666; font-weight: 400; }
+        .time-box span { display: block; font-size: 0.7rem; color: #666; }
 
         .quote-item { font-family: 'Playfair Display', serif; font-size: 1.6rem; text-align: center; margin: 120px 0; opacity: 0; transition: 1.5s; color: #000; font-weight: bold; transform: translateY(30px); }
         .quote-item.reveal { opacity: 1; transform: translateY(0); }
@@ -61,7 +58,10 @@
 </head>
 <body>
     <div class="bg-animate"></div>
-    <audio id="mySong" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    
+    <audio id="mySong" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="welcome-screen">
         <div class="glass-box">
@@ -87,7 +87,7 @@
         <div class="signature-top">From Andra to Notin</div>
         
         <div class="anniv-card">
-            <p style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">KITA SUDAH BERSAMA SELAMA</p>
+            <p style="font-size: 0.8rem; font-weight: 700;">KITA SUDAH BERSAMA SELAMA</p>
             <div id="timer">
                 <div class="time-box"><div id="days">00</div><span>Hari</span></div>
                 <div class="time-box"><div id="hours">00</div><span>Jam</span></div>
@@ -121,29 +121,22 @@
     </div>
 
     <script>
-        // Jawaban: 23 Mei 2008
         function cekJawaban() {
             const t = document.getElementById('tgl').value;
             const b = document.getElementById('bln').value;
             const th = document.getElementById('thn').value;
             if(t == "23" && b == "5" && th == "2008") {
-                document.getElementById('quiz-area').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('quiz-area').style.display = 'none';
-                    document.getElementById('secret-button-area').style.display = 'block';
-                }, 500);
+                document.getElementById('quiz-area').style.display = 'none';
+                document.getElementById('secret-button-area').style.display = 'block';
             } else { alert("Jawaban salah sayang! 🥺"); }
         }
 
-        // Hati melayang
         setInterval(() => {
             const h = document.createElement('div'); h.className = 'floating-heart'; h.innerHTML = '❤️';
             h.style.left = Math.random() * 100 + 'vw'; h.style.animationDuration = Math.random() * 3 + 5 + 's';
-            h.style.fontSize = Math.random() * 20 + 10 + 'px';
             document.body.appendChild(h); setTimeout(() => h.remove(), 7000);
         }, 500);
 
-        // Timer
         const startDate = new Date("March 21, 2025 00:00:00").getTime();
         setInterval(() => {
             const diff = new Date().getTime() - startDate;
@@ -153,13 +146,19 @@
             document.getElementById("secs").innerText = Math.floor((diff % 60000) / 1000);
         }, 1000);
 
-        // Mulai Kejutan
         let clicks = 0;
         function startSurprise() {
             clicks++;
-            if (clicks < 10) { document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`; }
+            const song = document.getElementById('mySong');
+            
+            // Pancing izin audio di klik pertama
+            if(clicks === 1) { song.play().then(() => song.pause()).catch(e => {}); }
+
+            if (clicks < 10) { 
+                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`; 
+            }
             else {
-                document.getElementById('mySong').play();
+                song.play(); // Putar di klik ke-10
                 document.getElementById('welcome-screen').style.transform = 'translateY(-100%)';
                 document.getElementById('welcome-screen').style.opacity = '0';
                 setTimeout(() => {
@@ -172,11 +171,9 @@
             }
         }
 
-        // Animasi Scroll
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.quote-item, .photo-item').forEach(el => {
-                const speed = 150;
-                if (el.getBoundingClientRect().top < window.innerHeight - speed) el.classList.add('reveal');
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('reveal');
             });
         });
     </script>
