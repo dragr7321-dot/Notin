@@ -19,7 +19,7 @@
 
         /* Welcome Screen */
         #welcome-screen { position: fixed; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; transition: 1.5s; }
-        .glass-box { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .glass-box { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid white; }
         .welcome-title { font-family: 'Dancing Script'; font-size: 3rem; color: var(--pink-deep); }
         
         #music-btn { display: none; background: #25d366; color: white; border: none; padding: 15px; border-radius: 15px; width: 100%; margin-top: 15px; cursor: pointer; font-weight: bold; }
@@ -29,21 +29,42 @@
         #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; opacity: 0; transition: 2s; }
         .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; }
         
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 50px; }
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
         .photo-item { aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Tombol Troll */
-        #troll-container { text-align: center; padding: 50px 0; background: rgba(255,255,255,0.4); border-radius: 20px; margin-top: 30px; border: 2px dashed var(--pink-deep); }
-        #btn-troll { padding: 15px 30px; background: var(--pink-deep); color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; position: relative; transition: 0.1s; z-index: 999; }
+        /* AREA TOMBOL TROLL (DIPERBAIKI) */
+        .troll-wrapper { 
+            width: 100%; 
+            min-height: 300px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            margin-top: 20px;
+            padding-bottom: 100px;
+            position: relative;
+        }
+        #btn-troll { 
+            padding: 18px 35px; 
+            background: var(--pink-deep); 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            z-index: 999; 
+            box-shadow: 0 10px 20px rgba(255, 77, 148, 0.4);
+            font-size: 1.1rem;
+        }
 
         /* Halaman Puisi */
         #poetry-section { display: none; padding: 100px 25px 300px; text-align: center; transition: opacity 2s ease-in-out; }
-        .poetry-content { font-family: 'Playfair Display', serif; font-size: 1.25rem; line-height: 2.5; color: #333; }
+        .poetry-content { font-family: 'Playfair Display', serif; font-size: 1.3rem; line-height: 2.5; color: #333; }
         .poetry-content p { margin-bottom: 80px; opacity: 0; transition: 2s; transform: translateY(30px); }
         .poetry-content p.visible { opacity: 1; transform: translateY(0); }
 
-        /* Halaman Terima Kasih (Penutup) */
+        /* Halaman Terima Kasih */
         #thanks-section { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; opacity: 0; transition: opacity 3s; position: fixed; top: 0; left: 0; z-index: 2000; background: #fff0f3; }
         .thanks-title { font-family: 'Dancing Script'; font-size: 4rem; color: var(--pink-deep); margin-bottom: 20px; }
         .btn-wa { padding: 18px 35px; background: #25d366; color: white; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
@@ -57,16 +78,18 @@
         <div class="glass-box">
             <h1 class="welcome-title">Notin Sayang ❤️</h1>
             <div id="quiz-area">
-                <p>Kapan ulang tahun aku?</p>
-                <input type="number" id="tgl" placeholder="Tgl" style="width:50px; padding:10px;">
-                <input type="number" id="bln" placeholder="Bln" style="width:50px; padding:10px;">
-                <input type="number" id="thn" placeholder="Thn" style="width:70px; padding:10px;">
+                <p style="margin-bottom:15px;">Kapan ulang tahun aku?</p>
+                <div style="display:flex; gap:5px; justify-content:center; margin-bottom:10px;">
+                   <input type="number" id="tgl" placeholder="Tgl" style="width:55px; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                   <input type="number" id="bln" placeholder="Bln" style="width:55px; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                   <input type="number" id="thn" placeholder="Thn" style="width:75px; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                </div>
                 <button class="btn-check" onclick="cekJawaban()">Jawab</button>
             </div>
             <div id="secret-area" style="display:none;">
                 <p id="msg">Jawaban Benar! ❤️</p>
                 <button id="music-btn" onclick="playMusic()">🎵 AKTIFKAN MUSIK DULU 🎵</button>
-                <button class="btn-sayang" id="btn-main" onclick="startSurprise()">KLIK 10 KALI</button>
+                <button class="btn-sayang" id="btn-main" onclick="startSurprise()" style="display:none;">KLIK 10 KALI</button>
                 <p id="counter" style="margin-top: 10px; font-weight: bold; color: var(--pink-deep);"></p>
             </div>
         </div>
@@ -81,32 +104,33 @@
             <div class="photo-item"><img src="7.jpg"></div><div class="photo-item"><img src="8.jpg"></div>
             <div class="photo-item"><img src="9.jpg"></div><div class="photo-item"><img src="10.jpg"></div>
         </div>
-        <div id="troll-container">
-            <p style="margin-bottom: 20px; font-weight: bold;">Ada pesan terakhir untukmu...</p>
+
+        <div class="troll-wrapper">
+            <p style="margin-bottom: 20px; font-weight: bold; text-align:center;">Scroll ke bawah terus ya sayang...<br>Ada sesuatu di tombol ini:</p>
             <button id="btn-troll" onmouseover="moveButton()" onclick="trollClicked()">BACA PESAN ❤️</button>
-            <p id="troll-counter" style="margin-top: 15px; font-size: 0.8rem; color: var(--pink-deep);"></p>
+            <p id="troll-counter" style="margin-top: 15px; font-weight: bold; color: var(--pink-deep);"></p>
         </div>
     </div>
 
     <div id="poetry-section">
         <div class="poetry-content">
-            <p>Notin, mungkin kata-kata ini tidak akan cukup untuk menggambarkan betapa berartinya kamu bagiku. Kita sudah melewati begitu banyak hal, dari tawa yang paling keras hingga air mata yang paling sunyi. Hubungan kita memang tidak pernah luput dari badai, rintangan, dan juga sejuta masalah yang datang silih berganti. Namun di balik semua kerumitan itu, ada satu hal yang tidak pernah berubah, yaitu perasaanku padamu.</p>
-            <p>Ada saat di mana kita berdua merasa sangat lelah dan hampir memilih untuk menyerah pada keadaan. Ego yang tinggi seringkali menjadi dinding besar yang memisahkan komunikasi dan pengertian di antara kita. Namun, aku selalu kagum bagaimana kita akhirnya selalu menemukan jalan pulang untuk kembali saling memeluk. Kita bukan pasangan yang sempurna, namun kita adalah dua orang yang menolak untuk saling melepaskan.</p>
-            <p>Aku tahu bahwa bersamaku mungkin bukan hal yang selalu mudah untuk kamu jalani setiap harinya. Kamu seringkali harus bersabar menghadapi sifatku, kekuranganku, dan segala hal yang mungkin melukaimu. Terima kasih karena sampai detik ini kamu masih memilih untuk bertahan dan tidak pergi meninggalkan. Terima kasih telah memberikan kesempatan bagi kita untuk terus memperbaiki apa yang sempat rusak.</p>
-            <p>Kita berdua saat ini sedang berada dalam fase perjuangan besar untuk merubah diri masing-masing. Aku sedang berusaha menjadi sosok yang lebih baik, lebih tenang, dan lebih bisa menjagamu dengan benar. Aku melihat kamu pun melakukan hal yang sama, berjuang melawan rasa sakit demi masa depan kita. Merubah kebiasaan lama bukanlah hal yang instan, namun selama kita satu visi, semua akan terasa ringan.</p>
-            <p>Ingatlah kembali saat-saat pertama kita memulai ini semua dengan penuh harapan dan doa yang tulus. Rasa sayang yang kita miliki seharusnya jauh lebih besar daripada masalah-masalah kecil yang seringkali merusak suasana. Jangan biarkan amarah sesaat menghancurkan bangunan cinta yang sudah susah payah kita susun bersama. Aku ingin kita selalu ingat bahwa di luar sana banyak yang mungkin iri dengan kekuatan kita.</p>
-            <p>Masalah bagi aku bukan lagi alasan untuk kita berpisah atau mencari sosok yang baru di luar sana. Masalah adalah guru yang paling jujur untuk memberitahu kita di mana letak celah yang harus diperbaiki. Jika nanti badai kembali datang menerjang, berjanjilah untuk tetap memegang tanganku dengan sangat erat. Kita mungkin akan kembali berdebat, namun jangan pernah biarkan hati kita menjadi dingin satu sama lain.</p>
-            <p>Sabar adalah kunci utama yang membuat kita masih bisa melihat matahari bersama hingga saat ini juga. Tanpa kesabaranmu yang seluas samudera, mungkin aku sudah kehilangan arah dalam menjalani hidup ini. Kamu adalah jangkar yang membuatku tetap membumi di tengah badai emosi yang seringkali meluap-luap. Aku berjanji akan terus belajar untuk lebih menghargai setiap pengorbanan dan waktu yang kamu berikan.</p>
-            <p>Terkadang aku berpikir, apa jadinya hidupku jika kamu tidak hadir dan membawa warna yang begitu indah. Kamu adalah rumah, tempat di mana aku bisa menjadi diriku sendiri tanpa takut akan dihakimi. Walaupun kita sering berbeda pendapat, namun tujuanku selalu sama, yaitu melihatmu tersenyum bahagia. Jangan pernah merasa berjuang sendirian, karena aku akan selalu ada di barisan terdepan untuk menjagamu.</p>
-            <p>Aku ingin kita menua bersama sambil menceritakan kembali betapa hebatnya kita melewati masa-masa sulit ini. Semua pertengkaran hari ini akan menjadi cerita lucu yang akan kita tertawakan di masa depan nanti. Kita akan membuktikan kepada dunia bahwa cinta yang sejati adalah cinta yang mau berproses bersama. Tidak ada yang instan dalam sebuah hubungan yang hebat, semua butuh waktu, keringat, dan doa.</p>
-            <p>Terakhir, aku hanya ingin berpesan agar kamu tidak pernah bosan untuk saling mengingatkan dalam kebaikan. Tetaplah menjadi sandaranku saat dunia sedang tidak ramah kepadaku, karena kamu adalah kekuatanku. Aku mencintaimu hari ini, esok, dan selama detak jantung ini masih terdengar di dalam dadaku. Terima kasih sudah menjadi Notin yang luar biasa. I love you so much, Notin. Selamanya dan untuk selamanya.</p>
+            <p>Notin, mungkin kata-kata ini tidak akan cukup untuk menggambarkan betapa berartinya kamu bagiku. Hubungan kita memang tidak pernah luput dari badai, rintangan, dan juga sejuta masalah yang datang silih berganti. Namun di balik semua kerumitan itu, ada satu hal yang tidak pernah berubah, yaitu perasaanku padamu.</p>
+            <p>Ada saat di mana kita berdua merasa sangat lelah dan hampir memilih untuk menyerah pada keadaan. Ego yang tinggi seringkali menjadi dinding besar yang memisahkan komunikasi dan pengertian di antara kita. Namun, aku selalu kagum bagaimana kita akhirnya selalu menemukan jalan pulang untuk kembali saling memeluk.</p>
+            <p>Aku tahu bahwa bersamaku mungkin bukan hal yang selalu mudah untuk kamu jalani setiap harinya. Kamu seringkali harus bersabar menghadapi sifatku, kekuranganku, dan segala hal yang mungkin melukaimu. Terima kasih karena sampai detik ini kamu masih memilih untuk bertahan dan tidak pergi meninggalkan.</p>
+            <p>Kita berdua saat ini sedang berada dalam fase perjuangan besar untuk merubah diri masing-masing. Aku sedang berusaha menjadi sosok yang lebih baik, lebih tenang, dan lebih bisa menjagamu dengan benar. Aku melihat kamu pun melakukan hal yang sama, berjuang melawan rasa sakit demi masa depan kita.</p>
+            <p>Ingatlah kembali saat-saat pertama kita memulai ini semua dengan penuh harapan dan doa yang tulus. Rasa sayang yang kita miliki seharusnya jauh lebih besar daripada masalah-masalah kecil yang seringkali merusak suasana. Jangan biarkan amarah sesaat menghancurkan bangunan cinta yang sudah susah payah kita susun bersama.</p>
+            <p>Masalah bagi aku bukan lagi alasan untuk kita berpisah atau mencari sosok yang baru di luar sana. Masalah adalah guru yang paling jujur untuk memberitahu kita di mana letak celah yang harus diperbaiki. Jika nanti badai kembali datang menerjang, berjanjilah untuk tetap memegang tanganku dengan sangat erat.</p>
+            <p>Sabar adalah kunci utama yang membuat kita masih bisa melihat matahari bersama hingga saat ini juga. Tanpa kesabaranmu yang seluas samudera, mungkin aku sudah kehilangan arah dalam menjalani hidup ini. Kamu adalah jangkar yang membuatku tetap membumi di tengah badai emosi yang seringkali meluap-luap.</p>
+            <p>Terkadang aku berpikir, apa jadinya hidupku jika kamu tidak hadir dan membawa warna yang begitu indah. Kamu adalah rumah, tempat di mana aku bisa menjadi diriku sendiri tanpa takut akan dihakimi. Walaupun kita sering berbeda pendapat, namun tujuanku selalu sama, yaitu melihatmu tersenyum bahagia.</p>
+            <p>Aku ingin kita menua bersama sambil menceritakan kembali betapa hebatnya kita melewati masa-masa sulit ini. Semua pertengkaran hari ini akan menjadi cerita lucu yang akan kita tertawakan di masa depan nanti. Kita akan membuktikan kepada dunia bahwa cinta yang sejati adalah cinta yang mau berproses bersama.</p>
+            <p>Terakhir, aku hanya ingin berpesan agar kamu tidak pernah bosan untuk saling mengingatkan dalam kebaikan. Tetaplah menjadi sandaranku saat dunia sedang tidak ramah kepadaku, karena kamu adalah kekuatanku. Aku mencintaimu hari ini, esok, dan selama detak jantung ini masih terdengar di dalam dadaku. I love you so much, Notin.</p>
         </div>
     </div>
 
     <div id="thanks-section">
         <h1 class="thanks-title">Terima Kasih, Notin ❤️</h1>
-        <p style="font-size: 1.1rem; color: #555; max-width: 300px;">Terima kasih sudah membaca semuanya. Aku sayang kamu!</p>
-        <a href="https://wa.me/628123456789?text=Aku%20sudah%20baca%20semuanya%20Andra%20sayang,%20makasih%20yaaa%20❤️" class="btn-wa">Balas Chat Andra Sekarang</a>
+        <p style="font-size: 1.1rem; color: #555;">Makasih sudah sabar dan mau berjuang bareng aku.</p>
+        <a href="https://wa.me/628123456789?text=Aku%20sudah%20baca%20semuanya%20Andra%20sayang%20❤️" class="btn-wa">Balas Chat Andra ❤️</a>
     </div>
 
     <script>
@@ -120,20 +144,16 @@
         function playMusic() {
             document.getElementById('mySong').play();
             document.getElementById('music-btn').style.display = 'none';
-            document.getElementById('msg').innerText = "Musik Aktif! Klik terakhir ❤️";
             document.getElementById('btn-main').style.display = 'block';
+            document.getElementById('msg').innerText = "Musik Jalan! Sekarang klik 10x ❤️";
         }
 
         let clicks = 0;
         function startSurprise() {
             clicks++;
-            if (clicks < 9) document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik...`;
-            else if (clicks === 9) {
-                document.getElementById('btn-main').style.display = 'none';
-                document.getElementById('music-btn').style.display = 'block';
-                document.getElementById('msg').innerText = "Aktifkan musiknya dulu!";
-            }
-            else if (clicks === 10) {
+            if (clicks < 10) {
+                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`;
+            } else {
                 document.getElementById('welcome-screen').style.transform = 'translateY(-100%)';
                 setTimeout(() => {
                     document.getElementById('welcome-screen').style.display = 'none';
@@ -147,8 +167,9 @@
         function moveButton() {
             if(trollClicks < 5) {
                 const btn = document.getElementById('btn-troll');
-                const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-                const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
+                // Tombol hanya akan lari-lari di dalam area viewport agar tidak hilang
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth - 40);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight - 40);
                 btn.style.position = 'fixed';
                 btn.style.left = (x < 20 ? 20 : x) + 'px';
                 btn.style.top = (y < 20 ? 20 : y) + 'px';
@@ -158,8 +179,9 @@
         function trollClicked() {
             trollClicks++;
             if(trollClicks < 5) {
-                document.getElementById('troll-counter').innerText = `Kena! ${trollClicks}/5. Kejar lagi!`;
+                document.getElementById('troll-counter').innerText = `Kena! ${trollClicks}/5. Ayo kejar lagi!`;
             } else {
+                document.getElementById('btn-troll').style.display = 'none';
                 startPoetry();
             }
         }
@@ -178,13 +200,14 @@
 
                 // AUTO SCROLL (2 Menit 30 Detik)
                 const totalDuration = 150000; 
-                const scrollStep = document.documentElement.scrollHeight / (totalDuration / 20);
+                const scrollHeight = document.getElementById('poetry-section').scrollHeight;
+                const scrollStep = scrollHeight / (totalDuration / 20);
 
                 const autoScroll = setInterval(() => {
                     window.scrollBy(0, scrollStep);
-                    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
+                    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) {
                         clearInterval(autoScroll);
-                        finishEverything(); // Panggil halaman terima kasih
+                        finishEverything();
                     }
                 }, 20);
             }, 1000);
@@ -192,16 +215,14 @@
 
         function finishEverything() {
             setTimeout(() => {
-                // Fade out halaman puisi
                 document.getElementById('poetry-section').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('poetry-section').style.display = 'none';
-                    // Munculkan halaman terima kasih
                     const thanks = document.getElementById('thanks-section');
                     thanks.style.display = 'flex';
                     setTimeout(() => { thanks.style.opacity = '1'; }, 100);
                 }, 2000);
-            }, 3000); // Tunggu 3 detik setelah scroll mentok
+            }, 3000);
         }
     </script>
 </body>
