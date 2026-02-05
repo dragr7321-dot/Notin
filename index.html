@@ -27,28 +27,34 @@
         /* Main Content */
         #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; opacity: 0; transition: 1s; }
         
-        /* 1. Timer & Kata-kata (ATAS) */
+        /* ATAS: TIMER & INTRO */
         .header-section { background: white; padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         #timer-display { font-size: 1.2rem; font-weight: 700; color: var(--pink-deep); margin: 15px 0; }
-        .intro-text p { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.6; color: #555; }
+        .intro-text p { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.6; color: #555; text-align: left; }
 
-        /* 2. Foto (TENGAH) */
+        /* TENGAH: FOTO */
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px; }
         .photo-item { aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; border: 3px solid white; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 3. Troll Box (BAWAH) */
-        .troll-box { background: rgba(255,255,255,0.6); border: 2px dashed var(--pink-deep); border-radius: 20px; padding: 40px 20px; text-align: center; margin-bottom: 100px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #btn-troll { padding: 15px 30px; background: var(--pink-deep); color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; }
+        /* BAWAH: TROLL BOX */
+        .troll-box { 
+            background: white; border: 2px solid var(--pink-soft); border-radius: 20px; 
+            padding: 30px 20px; text-align: center; margin-bottom: 50px; 
+            position: relative; height: 160px; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; overflow: hidden;
+        }
+        #btn-troll { padding: 12px 25px; background: var(--pink-deep); color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.2s; position: relative; z-index: 10; }
 
-        /* Poetry Section */
+        /* POETRY SECTION */
         #poetry-section { display: none; padding: 40px 15px 400px; }
         .poetry-container { background: rgba(255, 255, 255, 0.95); padding: 40px 20px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; text-align: center; }
         .poetry-container p { font-size: 1.1rem; margin-bottom: 35px; line-height: 1.8; color: #333; }
 
-        /* Final */
+        /* FINAL SECTION */
         #thanks-section { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff0f3; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; text-align: center; opacity: 0; transition: 2s; }
-        .btn-wa { background: #25d366; color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 25px; display: inline-block; }
+        .thanks-title { font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--pink-deep); margin-bottom: 10px; }
+        .btn-wa { background: #25d366; color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 25px; display: inline-block; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
     </style>
 </head>
 <body>
@@ -60,9 +66,11 @@
             <h2 style="color:var(--pink-deep); margin-bottom:15px;">Halo Notin Sayang ❤️</h2>
             <div id="quiz-area">
                 <p style="font-size:0.9rem; margin-bottom:10px;">Kapan ulang tahun aku?</p>
-                <input type="number" id="tgl" placeholder="Tgl" style="width:50px; padding:8px;">
-                <input type="number" id="bln" placeholder="Bln" style="width:50px; padding:8px;">
-                <input type="number" id="thn" placeholder="Thn" style="width:70px; padding:8px;">
+                <div style="display:flex; gap:5px; justify-content:center; margin-bottom:10px;">
+                    <input type="number" id="tgl" placeholder="Tgl" style="width:50px; padding:8px;">
+                    <input type="number" id="bln" placeholder="Bln" style="width:50px; padding:8px;">
+                    <input type="number" id="thn" placeholder="Thn" style="width:70px; padding:8px;">
+                </div>
                 <button class="btn-check" onclick="cekJawaban()">MASUK</button>
             </div>
             <div id="secret-area" style="display:none;">
@@ -78,7 +86,7 @@
             <h2 style="font-family:'Dancing Script'; color:var(--pink-deep); font-size:2rem;">Happy Days With You</h2>
             <div id="timer-display">Menghitung hari...</div>
             <div class="intro-text">
-                <p>Hai Notin, selamat datang di halaman kecil buatanku ini. Di sini aku ingin merangkum sedikit tentang betapa berharganya setiap detik yang aku lalui bersamamu.</p>
+                <p>Hai Notin, selamat datang di halaman kecil buatanku ini. Di sini aku ingin merangkum sedikit tentang betapa berartinya setiap detik yang aku lalui bersamamu.</p>
                 <p>Kita sudah melewati banyak hal, mulai dari canda tawa sampai perdebatan kecil yang mendewasakan kita.</p>
                 <p>Aku ingin kamu tahu bahwa aku sangat menghargai keberadaanmu dalam hidupku sampai saat ini.</p>
                 <p>Terima kasih sudah menjadi sosok yang selalu sabar dan mau mengerti segala kekuranganku.</p>
@@ -94,32 +102,31 @@
             <div class="photo-item"><img src="9.jpg"></div><div class="photo-item"><img src="10.jpg"></div>
         </div>
 
-        <div class="troll-box">
-            <p style="margin-bottom:15px; font-weight:600; font-size:0.9rem;">Masih ada pesan spesial untukmu...</p>
+        <div class="troll-box" id="troll-box">
+            <p style="margin-bottom:15px; font-weight:600; font-size:0.9rem;">Masih ada satu pesan spesial...</p>
             <button id="btn-troll" onmouseover="moveButton()" onclick="trollClicked()">BACA PESAN ❤️</button>
-            <p id="troll-info" style="margin-top:10px; font-size:0.8rem; color:var(--pink-deep);"></p>
         </div>
     </div>
 
     <div id="poetry-section">
         <div class="poetry-container">
-            <p>Notin sayang, perjalanan kita selama ini bukanlah hal yang mudah untuk dilalui sendirian. Ada banyak sekali masalah dan rintangan yang sempat membuat kita merasa lelah untuk terus bertahan bersama. Namun aku bersyukur karena hingga detik ini, kita masih memilih untuk saling menggenggam tangan dengan erat sekali. Masalah yang datang bukanlah alasan untuk kita berpisah, melainkan cara agar kita bisa tumbuh dewasa.</p>
-            <p>Aku menyadari bahwa ego yang tinggi seringkali menjadi penghalang komunikasi yang baik di antara kita berdua. Terkadang kita saling menyakiti dengan kata-kata, namun hati kita selalu menemukan jalan pulang untuk kembali bersatu. Terima kasih karena sudah bersabar menghadapi sifatku yang mungkin sulit untuk kamu pahami setiap harinya. Kamu adalah wanita yang luar biasa hebat karena mau bertahan di samping pria yang masih banyak kurangnya ini.</p>
-            <p>Perjuangan kita untuk merubah diri menjadi lebih baik adalah bukti nyata bahwa cinta kita sangat besar. Aku melihat usahamu, aku merasakan kesabaranmu, dan aku sangat menghargai setiap pengorbanan yang kamu lakukan. Tidak ada yang instan di dunia ini, begitupun dengan hubungan kita yang sedang berproses menuju kedewasaan. Aku berjanji akan terus belajar untuk menjadi sosok yang lebih tenang dan lebih bisa menjagamu dengan benar.</p>
-            <p>Sabar adalah kunci utama mengapa kita masih bisa bertahan sejauh ini meskipun banyak orang meragukan kita. Kamu selalu menjadi penenang di saat emosiku sedang meluap dan duniaku sedang terasa sangat tidak ramah. Tanpa kehadiranmu, mungkin aku sudah kehilangan arah dan menyerah pada keadaan yang sangat sulit ini. Kamu memberikan warna baru dalam hidupku dan mengajarkanku apa artinya sebuah kesetiaan yang tulus.</p>
-            <p>Ingatlah kembali masa-masa indah yang pernah kita lalui agar kita tidak mudah menyerah saat masalah datang. Setiap foto yang kita ambil adalah bukti bahwa kita pernah sangat bahagia dan akan terus bahagia selamanya. Jangan biarkan amarah yang sesaat menghancurkan semua kenangan manis yang sudah kita bangun dengan susah payah. Aku ingin menghabiskan lebih banyak waktu lagi bersamamu, melihatmu tersenyum, dan mendengar tawamu setiap hari.</p>
-            <p>Masalah bagi aku bukan lagi beban, melainkan kesempatan untuk membuktikan seberapa besar rasa sayangku padamu. Kita mungkin akan kembali berdebat di masa depan, namun berjanjilah untuk tidak pernah saling melepaskan. Setiap perbaikan yang kita lakukan hari ini adalah modal besar untuk masa depan kita yang jauh lebih indah. Aku ingin kita menua bersama, menceritakan kisah perjuangan kita ini kepada anak cucu kita nanti.</p>
-            <p>Terima kasih sudah menjadi Notin yang sabar, yang mau memaafkan kekhilafanku berulang kali tanpa rasa benci. Aku tahu aku sering mengecewakanmu, namun niatku untuk merubah diri tidak pernah padam sedikit pun di hati. Aku ingin membahagiakanmu dengan cara yang paling tulus yang bisa aku lakukan sebagai seorang pria. Mari kita tutup rapat buku lama yang penuh air mata dan kita buka lembaran baru yang penuh kebahagiaan.</p>
-            <p>Kesabaranmu adalah kekuatanku, dan doa-doamu adalah pelindungku dalam menjalani hari-hari yang berat ini. Aku ingin kita selalu saling mendukung dalam hal apapun, baik di saat kita senang maupun di saat sulit. Jangan pernah merasa sendirian dalam berjuang, karena aku akan selalu ada di barisan paling depan untukmu. Kita harus membuktikan kepada dunia bahwa hubungan yang banyak masalah pun bisa berakhir dengan sangat indah.</p>
-            <p>Aku mencintaimu lebih dari sekadar kata-kata yang bisa aku tuliskan di dalam halaman web sederhana ini. Setiap detak jantungku selalu menyebut namamu sebagai alasan mengapa aku harus terus berjuang setiap harinya. Kamu adalah anugerah terindah yang pernah Tuhan kirimkan untuk melengkapi hidupku yang sempat terasa sepi. Teruslah tumbuh menjadi pribadi yang baik bersamaku, karena aku tidak ingin melangkah tanpa ada kamu.</p>
-            <p>Terakhir, aku hanya ingin mengucapkan terima kasih sekali lagi karena kamu tidak pernah pergi saat keadaan sedang buruk. Maafkan aku jika selama ini masih banyak hal yang belum bisa aku berikan untuk membahagiakanmu sepenuhnya. Namun satu hal yang pasti, cintaku padamu sangat tulus dan akan terus berkembang seiring berjalannya waktu. Aku sangat sayang padamu, Notin, lebih dari apapun yang ada di dunia ini. Selamanya.</p>
+            <p>Notin sayang, perjalanan kita selama ini bukanlah hal yang mudah untuk dilalui sendirian. Ada banyak sekali masalah dan rintangan yang sempat membuat kita merasa lelah untuk terus bertahan bersama. Namun aku bersyukur karena hingga detik ini, kita masih memilih untuk saling menggenggam tangan dengan erat sekali.</p>
+            <p>Aku menyadari bahwa ego yang tinggi seringkali menjadi penghalang komunikasi yang baik di antara kita berdua. Terkadang kita saling menyakiti dengan kata-kata, namun hati kita selalu menemukan jalan pulang untuk kembali bersatu. Terima kasih karena sudah bersabar menghadapi sifatku yang mungkin sulit untuk kamu pahami.</p>
+            <p>Perjuangan kita untuk merubah diri menjadi lebih baik adalah bukti nyata bahwa cinta kita sangat besar. Aku melihat usahamu, aku merasakan kesabaranmu, dan aku sangat menghargai setiap pengorbanan yang kamu lakukan. Tidak ada yang instan di dunia ini, begitupun dengan hubungan kita yang sedang berproses.</p>
+            <p>Sabar adalah kunci utama mengapa kita masih bisa bertahan sejauh ini meskipun banyak orang meragukan kita. Kamu selalu menjadi penenang di saat emosiku sedang meluap dan duniaku sedang terasa sangat tidak ramah. Tanpa kehadiranmu, mungkin aku sudah kehilangan arah dan menyerah pada keadaan yang sulit ini.</p>
+            <p>Ingatlah kembali masa-masa indah yang pernah kita lalui agar kita tidak mudah menyerah saat masalah datang. Setiap foto yang kita ambil adalah bukti bahwa kita pernah sangat bahagia dan akan terus bahagia selamanya. Jangan biarkan amarah yang sesaat menghancurkan semua kenangan manis yang sudah kita bangun.</p>
+            <p>Masalah bagi aku bukan lagi beban, melainkan kesempatan untuk membuktikan seberapa besar rasa sayangku padamu. Kita mungkin akan kembali berdebat di masa depan, namun berjanjilah untuk tidak pernah saling melepaskan. Setiap perbaikan yang kita lakukan hari ini adalah modal besar untuk masa depan kita.</p>
+            <p>Terima kasih sudah menjadi Notin yang sabar, yang mau memaafkan kekhilafanku berulang kali tanpa rasa benci. Aku tahu aku sering mengecewakanmu, namun niatku untuk merubah diri tidak pernah padam sedikit pun di hati. Aku ingin membahagiakanmu dengan cara yang paling tulus sebagai seorang pria.</p>
+            <p>Kesabaranmu adalah kekuatanku, dan doa-doamu adalah pelindungku dalam menjalani hari-hari yang berat ini. Aku ingin kita selalu saling mendukung dalam hal apapun, baik di saat kita senang maupun di saat sulit. Jangan pernah merasa sendirian, karena aku akan selalu ada di barisan paling depan untukmu.</p>
+            <p>Aku mencintaimu lebih dari sekadar kata-kata yang bisa aku tuliskan di dalam halaman web sederhana ini. Setiap detak jantungku selalu menyebut namamu sebagai alasan mengapa aku harus terus berjuang setiap harinya. Kamu adalah anugerah terindah yang pernah Tuhan kirimkan untuk melengkapi hidupku.</p>
+            <p>Terakhir, aku hanya ingin mengucapkan terima kasih sekali lagi karena kamu tidak pernah pergi saat keadaan sedang buruk. Maafkan aku jika selama ini masih banyak hal yang belum bisa aku berikan sepenuhnya. Namun cintaku padamu sangat tulus dan akan terus berkembang. I love you, Notin. Selamanya.</p>
         </div>
     </div>
 
     <div id="thanks-section">
-        <h1 style="font-family:'Dancing Script'; color:var(--pink-deep); font-size:3.5rem;">Terima Kasih, Notin ❤️</h1>
-        <p style="max-width:300px; margin-top:10px;">Terima kasih sudah membaca pesan panjangku. I Love You!</p>
-        <a href="https://wa.me/628123456789?text=Aku%20udah%20baca%20semuanya%20sayang,%20makasih%20yaaa%20❤️" class="btn-wa">BALAS CHAT ANDRA</a>
+        <h1 class="thanks-title">Terima Kasih, Notin ❤️</h1>
+        <p>I Love You More Than Words Can Say!</p>
+        <a href="https://wa.me/6283842522373?text=Aku%20udah%20baca%20semuanya%20Andra%20sayang%20❤️" class="btn-wa">BALAS CHAT ANDRA</a>
     </div>
 
     <script>
@@ -169,11 +176,12 @@
 
         let trollClicks = 0;
         function moveButton() {
-            if(trollClicks < 5) {
+            if(trollClicks < 1) { 
                 const btn = document.getElementById('btn-troll');
-                const x = Math.random() * (window.innerWidth - 120);
-                const y = Math.random() * (window.innerHeight - 50);
-                btn.style.position = 'fixed';
+                const box = document.getElementById('troll-box');
+                const x = Math.random() * (box.offsetWidth - btn.offsetWidth - 20);
+                const y = Math.random() * (box.offsetHeight - btn.offsetHeight - 20);
+                btn.style.position = 'absolute';
                 btn.style.left = x + 'px';
                 btn.style.top = y + 'px';
             }
@@ -181,9 +189,7 @@
 
         function trollClicked() {
             trollClicks++;
-            if(trollClicks < 5) {
-                document.getElementById('troll-info').innerText = `Kena! ${trollClicks}/5`;
-            } else {
+            if(trollClicks >= 1) {
                 startPoetry();
             }
         }
@@ -195,7 +201,7 @@
                 document.getElementById('poetry-section').style.display = 'block';
                 window.scrollTo(0,0);
                 
-                const duration = 150000; // 2.5 menit
+                const duration = 150000; // 2.5 menit auto-scroll
                 const distance = document.documentElement.scrollHeight;
                 const step = distance / (duration / 20);
 
