@@ -29,45 +29,27 @@
         #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; opacity: 0; transition: 2s; }
         .signature-top { text-align: center; font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--pink-deep); margin: 40px 0; }
         
+        /* TIMER STYLE */
+        .anniv-card { background: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid white; }
+        #timer-display { font-size: 1.1rem; font-weight: bold; color: var(--pink-deep); margin-top: 10px; }
+
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
         .photo-item { aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* AREA TOMBOL TROLL (DIPERBAIKI) */
-        .troll-wrapper { 
-            width: 100%; 
-            min-height: 300px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            margin-top: 20px;
-            padding-bottom: 100px;
-            position: relative;
-        }
-        #btn-troll { 
-            padding: 18px 35px; 
-            background: var(--pink-deep); 
-            color: white; 
-            border: none; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            z-index: 999; 
-            box-shadow: 0 10px 20px rgba(255, 77, 148, 0.4);
-            font-size: 1.1rem;
-        }
+        .troll-wrapper { width: 100%; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 20px; padding-bottom: 100px; }
+        #btn-troll { padding: 18px 35px; background: var(--pink-deep); color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 999; box-shadow: 0 10px 20px rgba(255, 77, 148, 0.4); }
 
-        /* Halaman Puisi */
-        #poetry-section { display: none; padding: 100px 25px 300px; text-align: center; transition: opacity 2s ease-in-out; }
+        /* POETRY STYLE */
+        #poetry-section { display: none; padding: 100px 25px 300px; text-align: center; transition: opacity 2s; }
         .poetry-content { font-family: 'Playfair Display', serif; font-size: 1.3rem; line-height: 2.5; color: #333; }
         .poetry-content p { margin-bottom: 80px; opacity: 0; transition: 2s; transform: translateY(30px); }
         .poetry-content p.visible { opacity: 1; transform: translateY(0); }
 
-        /* Halaman Terima Kasih */
+        /* FINAL SECTION */
         #thanks-section { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; opacity: 0; transition: opacity 3s; position: fixed; top: 0; left: 0; z-index: 2000; background: #fff0f3; }
-        .thanks-title { font-family: 'Dancing Script'; font-size: 4rem; color: var(--pink-deep); margin-bottom: 20px; }
-        .btn-wa { padding: 18px 35px; background: #25d366; color: white; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
+        .thanks-title { font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--pink-deep); margin-bottom: 20px; }
+        .btn-wa { padding: 18px 35px; background: #25d366; color: white; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -80,9 +62,9 @@
             <div id="quiz-area">
                 <p style="margin-bottom:15px;">Kapan ulang tahun aku?</p>
                 <div style="display:flex; gap:5px; justify-content:center; margin-bottom:10px;">
-                   <input type="number" id="tgl" placeholder="Tgl" style="width:55px; padding:10px; border-radius:8px; border:1px solid #ddd;">
-                   <input type="number" id="bln" placeholder="Bln" style="width:55px; padding:10px; border-radius:8px; border:1px solid #ddd;">
-                   <input type="number" id="thn" placeholder="Thn" style="width:75px; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                   <input type="number" id="tgl" placeholder="Tgl" style="width:55px; padding:10px;">
+                   <input type="number" id="bln" placeholder="Bln" style="width:55px; padding:10px;">
+                   <input type="number" id="thn" placeholder="Thn" style="width:75px; padding:10px;">
                 </div>
                 <button class="btn-check" onclick="cekJawaban()">Jawab</button>
             </div>
@@ -97,6 +79,13 @@
 
     <div id="main-content">
         <div class="signature-top">Memori Kita</div>
+        
+        <div class="anniv-card">
+            <p style="font-size: 0.8rem; letter-spacing: 2px;">KITA SUDAH BERSAMA SELAMA</p>
+            <div id="timer-display">Menghitung hari...</div>
+            <p style="font-size: 0.7rem; color: #888; margin-top: 10px;">Sejak 21 Maret 2025</p>
+        </div>
+
         <div class="photo-grid">
             <div class="photo-item"><img src="1.jpg"></div><div class="photo-item"><img src="2.jpg"></div>
             <div class="photo-item"><img src="3.jpg"></div><div class="photo-item"><img src="4.jpg"></div>
@@ -106,7 +95,6 @@
         </div>
 
         <div class="troll-wrapper">
-            <p style="margin-bottom: 20px; font-weight: bold; text-align:center;">Scroll ke bawah terus ya sayang...<br>Ada sesuatu di tombol ini:</p>
             <button id="btn-troll" onmouseover="moveButton()" onclick="trollClicked()">BACA PESAN ❤️</button>
             <p id="troll-counter" style="margin-top: 15px; font-weight: bold; color: var(--pink-deep);"></p>
         </div>
@@ -129,11 +117,23 @@
 
     <div id="thanks-section">
         <h1 class="thanks-title">Terima Kasih, Notin ❤️</h1>
-        <p style="font-size: 1.1rem; color: #555;">Makasih sudah sabar dan mau berjuang bareng aku.</p>
+        <p>Makasih sudah mau berjuang bareng aku.</p>
         <a href="https://wa.me/628123456789?text=Aku%20sudah%20baca%20semuanya%20Andra%20sayang%20❤️" class="btn-wa">Balas Chat Andra ❤️</a>
     </div>
 
     <script>
+        // TIMER LOGIC
+        const startDate = new Date("March 21, 2025 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            document.getElementById("timer-display").innerText = `${days} Hari, ${hours} Jam, ${mins} Menit, ${secs} Detik`;
+        }, 1000);
+
         function cekJawaban() {
             if(document.getElementById('tgl').value == "23" && document.getElementById('bln').value == "5" && document.getElementById('thn').value == "2008") {
                 document.getElementById('quiz-area').style.display = 'none';
@@ -145,14 +145,14 @@
             document.getElementById('mySong').play();
             document.getElementById('music-btn').style.display = 'none';
             document.getElementById('btn-main').style.display = 'block';
-            document.getElementById('msg').innerText = "Musik Jalan! Sekarang klik 10x ❤️";
+            document.getElementById('msg').innerText = "Musik Jalan! Klik 10x ❤️";
         }
 
         let clicks = 0;
         function startSurprise() {
             clicks++;
             if (clicks < 10) {
-                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik lagi...`;
+                document.getElementById('counter').innerText = `Sisa ${10 - clicks} klik...`;
             } else {
                 document.getElementById('welcome-screen').style.transform = 'translateY(-100%)';
                 setTimeout(() => {
@@ -167,7 +167,6 @@
         function moveButton() {
             if(trollClicks < 5) {
                 const btn = document.getElementById('btn-troll');
-                // Tombol hanya akan lari-lari di dalam area viewport agar tidak hilang
                 const x = Math.random() * (window.innerWidth - btn.offsetWidth - 40);
                 const y = Math.random() * (window.innerHeight - btn.offsetHeight - 40);
                 btn.style.position = 'fixed';
@@ -200,8 +199,8 @@
 
                 // AUTO SCROLL (2 Menit 30 Detik)
                 const totalDuration = 150000; 
-                const scrollHeight = document.getElementById('poetry-section').scrollHeight;
-                const scrollStep = scrollHeight / (totalDuration / 20);
+                const scrollHeight = document.documentElement.scrollHeight;
+                const scrollStep = (scrollHeight + 500) / (totalDuration / 20);
 
                 const autoScroll = setInterval(() => {
                     window.scrollBy(0, scrollStep);
