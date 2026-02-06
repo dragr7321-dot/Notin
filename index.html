@@ -8,78 +8,117 @@
     <style>
         :root { 
             --pink-main: #ff4d94; 
-            --pink-soft: #ffb3d1;
             --pink-bg: #fff5f7;
-            --glass: rgba(255, 255, 255, 0.9);
+            --glass: rgba(255, 255, 255, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: var(--pink-bg); color: #444; overflow-x: hidden; }
 
-        .hearts-bg { position: fixed; width: 100%; height: 100%; z-index: -1; top: 0; left: 0; background: linear-gradient(135deg, #fff5f7 0%, #ffe0e9 100%); }
-        .heart-float { position: absolute; color: var(--pink-soft); animation: float 15s linear infinite; opacity: 0.5; }
-        @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0.5; } }
+        .page { display: none; opacity: 0; transition: 0.8s ease; padding: 20px; max-width: 500px; margin: 0 auto; }
+        .page.active { display: block; opacity: 1; }
 
-        .page { display: none; opacity: 0; transform: translateY(20px); transition: 1s ease; padding: 20px; max-width: 600px; margin: 0 auto; }
-        .page.active { display: block; opacity: 1; transform: translateY(0); }
+        .glass-card { 
+            background: var(--glass); 
+            border-radius: 20px; padding: 20px; 
+            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.1); 
+            text-align: center; margin-bottom: 20px;
+        }
 
-        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border-radius: 30px; padding: 30px; box-shadow: 0 15px 35px rgba(255, 77, 148, 0.1); text-align: center; margin-bottom: 25px; border: 1px solid white; }
+        /* TIMER STYLE */
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+        .timer-item { background: white; padding: 10px 5px; border-radius: 10px; border: 1px solid #ffe0e9; }
+        .timer-item span { display: block; color: var(--pink-main); font-weight: 800; font-size: 1.1rem; }
+        .timer-item small { font-size: 0.6rem; color: #999; text-transform: uppercase; }
 
-        /* GALLERY 10 FOTO SCATTERED */
-        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 30px 0; }
-        .photo-item { position: relative; border-radius: 15px; overflow: hidden; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.4s; background: white; }
-        
-        .photo-item:nth-child(1) { transform: rotate(-3deg); }
-        .photo-item:nth-child(2) { transform: rotate(4deg); margin-top: 20px; }
-        .photo-item:nth-child(3) { transform: rotate(-2deg); grid-column: span 2; height: 220px; }
-        .photo-item:nth-child(4) { transform: rotate(3deg); }
-        .photo-item:nth-child(5) { transform: rotate(-5deg); }
-        .photo-item:nth-child(6) { transform: rotate(2deg); height: 200px; }
-        .photo-item:nth-child(7) { transform: rotate(-4deg); height: 200px; }
-        .photo-item:nth-child(8) { transform: rotate(5deg); grid-column: span 2; height: 180px; }
-        .photo-item:nth-child(9) { transform: rotate(-3deg); }
-        .photo-item:nth-child(10) { transform: rotate(2deg); }
-
+        /* FOTO 1:1 KOTAK SEMPURNA */
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
+        .photo-item { 
+            width: 100%; aspect-ratio: 1 / 1; 
+            overflow: hidden; border-radius: 10px; 
+            background: #eee; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-        .photo-item:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
 
-        button { padding: 16px; border: none; border-radius: 20px; background: var(--pink-main); color: white; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 10px 20px rgba(255, 77, 148, 0.2); }
-        input { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; margin: 15px 0; text-align: center; }
+        /* AUTO SCROLL POETRY (ALUR FILM) */
+        #poetry-wrapper {
+            height: 400px; overflow: hidden; position: relative;
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+        #scrolling-content {
+            position: absolute; width: 100%; left: 0; padding: 0 20px;
+            text-align: left; line-height: 1.8; font-size: 0.95rem;
+            animation: moveUp 45s linear forwards; /* Durasi scroll 45 detik */
+        }
+        @keyframes moveUp {
+            0% { top: 100%; }
+            100% { top: -180%; } /* Sesuaikan ini jika puisi lebih panjang */
+        }
 
-        /* POETRY BOX */
-        #typing-box { text-align: left; font-size: 1.05rem; line-height: 2.2; color: #333; white-space: pre-wrap; font-weight: 400; }
-        .cursor { width: 3px; height: 1.2rem; background: var(--pink-main); display: inline-block; animation: blink 0.8s infinite; vertical-align: middle; }
-        @keyframes blink { 50% { opacity: 0; } }
+        button { 
+            padding: 16px; border: none; border-radius: 15px; 
+            background: var(--pink-main); color: white; 
+            font-weight: 700; cursor: pointer; width: 100%;
+        }
 
-        #welcome-screen { position: fixed; width: 100%; height: 100%; z-index: 2000; display: flex; align-items: center; justify-content: center; background: var(--pink-bg); transition: 1s; }
+        #welcome-screen { 
+            position: fixed; width: 100%; height: 100%; z-index: 2000; 
+            display: flex; align-items: center; justify-content: center; 
+            background: var(--pink-bg); 
+        }
+        input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="hearts-bg" id="hearts-container"></div>
     <audio id="mySong" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
     <div id="welcome-screen">
-        <div class="glass-card" style="width: 320px;">
-            <h1 style="font-family:'Dancing Script'; font-size: 2.5rem; color: var(--pink-main);">Hai Notin.. ❤️</h1>
-            <div id="quiz-area">
-                <input type="text" id="passInput" placeholder="Tanggal Lahir Aku (DD-MM-YYYY)">
-                <button onclick="cekJawaban()">Buka Pesan Andra</button>
-            </div>
-            <div id="secret-area" style="display:none;">
-                <button style="background:#25d366;" onclick="playMusic()">🎵 Musik Dulu Sayang</button>
-                <button onclick="startSurprise()" id="btn-main" style="display:none; margin-top:15px;">Klik 10x Dong 💖</button>
-                <p id="counter" style="margin-top:10px; font-weight:800; color:var(--pink-main);"></p>
+        <div class="glass-card" style="width: 300px;">
+            <h2 style="font-family:'Dancing Script'; color: var(--pink-main);">Halo Sayang..</h2>
+            <input type="text" id="passInput" placeholder="Tgl Lahir Aku (DD-MM-YYYY)">
+            <button onclick="cekJawaban()">Buka Surat ✨</button>
+            <div id="secret-area" style="display:none; margin-top:15px;">
+                <button style="background:#25d366;" onclick="startAll()">🎵 Mulai Sekarang</button>
             </div>
         </div>
     </div>
 
     <div id="main-content" class="page">
         <div class="glass-card">
-            <h2 style="font-family:'Dancing Script'; font-size: 2.2rem; color: var(--pink-main);">Our Memories</h2>
-            <p style="font-size: 0.85rem; color: #888; margin-top: 5px;">Koleksi momen kita..</p>
+            <h3 style="font-family:'Dancing Script'; font-size: 1.5rem; color: var(--pink-main);">Sudah Bersama Selama:</h3>
+            <div class="timer-grid">
+                <div class="timer-item"><span id="d">0</span><small>Hari</small></div>
+                <div class="timer-item"><span id="h">0</span><small>Jam</small></div>
+                <div class="timer-item"><span id="m">0</span><small>Menit</small></div>
+                <div class="timer-item"><span id="s">0</span><small>Detik</small></div>
+            </div>
         </div>
 
-        <div class="photo-gallery">
+        <div id="poetry-container">
+            <div id="poetry-wrapper">
+                <div id="scrolling-content">
+                    <p><b>Notin Sayang..</b><br><br>
+                    Perjalanan yang kita lalui ini memang tidak selalu mudah. Ada banyak sekali duri dan rintangan yang sempat membuat kita merasa lelah.<br><br>
+                    Aku sadar bahwa aku bukanlah pria yang sempurna. Di dalam diriku masih banyak ego, banyak keras kepala, dan kekurangan yang mungkin sering menyakitimu.<br><br>
+                    Terima kasih karena kamu tetap memilih untuk bersabar. Kesabaranmu adalah alasan terbesar mengapa kita masih bisa bertahan sejauh ini.<br><br>
+                    Aku ingin kamu tahu, bahwa setiap usahaku untuk menjadi lebih baik adalah murni demi kamu. Aku ingin menjadi tempat pulang paling nyaman untukmu.<br><br>
+                    Jangan pernah merasa sendirian dalam perjuangan ini. Aku akan selalu ada di barisan paling depan untuk melindungimu dan menjagamu.<br><br>
+                    Mungkin ada banyak perdebatan kecil yang terjadi. Tapi biarlah itu semua menjadi bumbu yang mendewasakan cara kita mencintai.<br><br>
+                    Ingatlah kembali masa-masa indah yang pernah kita lalui. Setiap tawa dan janji yang pernah kita ucapkan adalah kekuatan kita.<br><br>
+                    Aku ingin kita terus bertumbuh bersama. Bukan hanya sebagai kekasih, tapi sebagai sahabat jiwa yang saling menguatkan.<br><br>
+                    Jangan biarkan ego menghancurkan mimpi-mimpi besar kita. Mari kita saling menggenggam lebih erat lagi saat keadaan sulit.<br><br>
+                    Kamu adalah anugerah terindah yang Tuhan kirimkan untukku. Tanpamu, duniaku mungkin akan terasa sangat sepi dan tanpa arah.<br><br>
+                    Setiap detak jantungku selalu menyebut namamu sebagai alasan mengapa aku harus terus berjuang dan tidak boleh menyerah.<br><br>
+                    Aku ingin menghabiskan banyak waktu lagi bersamamu. Melihatmu tersenyum adalah pemandangan favoritku selamanya.<br><br>
+                    Maafkan aku jika terkadang caraku mencintaimu terasa salah. Hatiku sangat tulus menyayangimu apa adanya.<br><br>
+                    Terima kasih sudah tidak pernah pergi di saat-saat terburukku. Kesetiaanmu adalah harta yang paling berharga.<br><br>
+                    Aku sayang kamu, hari ini, besok, lusa, dan selamanya. I love you more than words can say, Notin. ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-grid">
             <div class="photo-item"><img src="1.jpg"></div>
             <div class="photo-item"><img src="2.jpg"></div>
             <div class="photo-item"><img src="3.jpg"></div>
@@ -92,74 +131,44 @@
             <div class="photo-item"><img src="10.jpg"></div>
         </div>
 
-        <button onclick="trollClicked()" style="margin-top: 20px;">Baca Pesan Terakhir ❤️</button>
-    </div>
-
-    <div id="poetry-section" class="page">
         <div class="glass-card">
-            <div id="typing-box"></div><span class="cursor"></span>
-        </div>
-        <div style="height: 250px;"></div>
-    </div>
-
-    <div id="thanks-section" class="page">
-        <div class="glass-card">
-            <h1 style="font-family:'Dancing Script'; font-size: 3rem; color: var(--pink-main);">I Love You!</h1>
-            <a href="https://wa.me/6283842522373?text=Makasih%20webnya%20Andra%20sayang%20❤️" style="text-decoration:none; display:block; padding:16px; background:#25d366; color:white; border-radius:20px; font-weight:800; margin-top:20px; text-align: center;">Balas Chat Andra 🤗</a>
+            <a href="https://wa.me/6283842522373?text=I%20Love%20You%20Too%20Andra%20❤️" style="text-decoration:none;">
+                <button style="background:#25d366;">Balas Chat Andra 🤗</button>
+            </a>
         </div>
     </div>
 
     <script>
-        function createHearts() {
-            const container = document.getElementById('hearts-container');
-            for(let i=0; i<20; i++) {
-                let h = document.createElement('div'); h.innerHTML = '❤️'; h.className = 'heart-float';
-                h.style.left = Math.random() * 100 + 'vw'; h.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                h.style.animationDelay = Math.random() * 10 + 's'; container.appendChild(h);
-            }
+        // Hitung Waktu (Ganti tanggal jadian kamu di sini)
+        const startDate = new Date("March 21, 2024 00:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }
-        createHearts();
 
         function cekJawaban() {
             if(document.getElementById('passInput').value == "23-05-2008") {
                 document.getElementById('quiz-area').style.display = 'none';
+                document.getElementById('passInput').style.display = 'none';
                 document.getElementById('secret-area').style.display = 'block';
-            } else { alert("Tanggalnya salah sayang.."); }
+            } else { alert("Salah sayang.."); }
         }
 
-        function playMusic() { document.getElementById('mySong').play(); document.getElementById('btn-main').style.display = 'block'; }
+        function startAll() {
+            document.getElementById('mySong').play();
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-content').classList.add('active');
+            setInterval(updateTimer, 1000);
 
-        let taps = 0;
-        function startSurprise() {
-            taps++;
-            if(taps < 10) { document.getElementById('counter').innerText = 10 - taps; }
-            else {
-                document.getElementById('welcome-screen').style.transform = 'translateY(-100%)';
-                setTimeout(() => { document.getElementById('welcome-screen').style.display = 'none'; showPage('main-content'); }, 1000);
-            }
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function trollClicked() { showPage('poetry-section'); setTimeout(typeWriter, 1000); }
-
-        const message = `Notin sayang..\n\nPerjalanan yang kita lalui ini memang tidak selalu mudah. Ada banyak sekali duri dan rintangan yang sempat membuat kita merasa sangat lelah untuk melangkah.\n\nAku sadar bahwa aku bukanlah pria yang sempurna. Di dalam diriku masih banyak ego, banyak keras kepala, dan banyak kekurangan yang mungkin sering menyakitimu tanpa sengaja.\n\nTerima kasih karena kamu tetap memilih untuk bersabar. Kesabaranmu adalah alasan terbesar mengapa kita masih bisa bertahan sejauh ini meski badai datang menghantam.\n\nAku ingin kamu tahu, bahwa setiap usahaku untuk menjadi lebih baik adalah murni demi kamu. Aku ingin menjadi tempat pulang paling nyaman untukmu bersandar di saat dunia sedang berisik.\n\nJangan pernah merasa sendirian dalam perjuangan ini. Aku akan selalu ada di barisan paling depan untuk melindungimu, menjagamu, dan memastikan kamu merasa sangat berharga.\n\nMungkin ada banyak perdebatan kecil yang terjadi di antara kita. Tapi biarlah itu semua menjadi bumbu yang mendewasakan cara kita mencintai dan saling mengerti satu sama lain.\n\nIngatlah kembali masa-masa indah yang pernah kita lalui. Setiap tawa, setiap pelukan, dan setiap janji yang pernah kita ucapkan adalah kekuatan utama kita untuk hari esok.\n\nAku ingin kita terus bertumbuh bersama. Bukan hanya sebagai sepasang kekasih, tapi sebagai sahabat jiwa yang saling menguatkan meski tanpa banyak kata-kata yang diucapkan.\n\nJangan biarkan ego menghancurkan mimpi-mimpi besar yang sudah kita susun. Mari kita saling menggenggam lebih erat lagi saat keadaan terasa semakin sulit untuk dijalani.\n\nKamu adalah anugerah terindah yang Tuhan kirimkan untuk melengkapi hari-hariku. Tanpamu, duniaku mungkin akan terasa sangat sepi dan kehilangan arah tujuannya.\n\nSetiap detak jantungku selalu menyebut namamu sebagai alasan mengapa aku harus terus berjuang dan tidak boleh menyerah pada keadaan yang melelahkan ini.\n\nAku ingin menghabiskan banyak waktu lagi bersamamu. Melihatmu tersenyum adalah pemandangan favoritku, dan membuatmu bahagia adalah prioritas utamaku selamanya.\n\nMaafkan aku jika terkadang caraku mencintaimu terasa salah. Ketahuilah bahwa di balik semua keterbatasanku, ada hati yang sangat tulus menyayangimu apa adanya.\n\nTerima kasih sudah tidak pernah pergi di saat-saat terburukku. Kesetiaanmu adalah harta yang paling berharga yang pernah aku miliki di dunia yang fana ini.\n\nAku sayang kamu, hari ini, besok, lusa, dan sampai nanti waktu yang akan menjawab segalanya. I love you more than words can say, Notin. Selamanya. ❤️`;
-
-        let i = 0;
-        function typeWriter() {
-            if (i < message.length) {
-                document.getElementById("typing-box").innerHTML += message.charAt(i);
-                i++;
-                // AUTO SCROLL
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                setTimeout(typeWriter, 50);
-            } else {
-                setTimeout(() => showPage('thanks-section'), 4000);
-            }
+            // Hilangkan puisi setelah animasi selesai (45 detik)
+            setTimeout(() => {
+                document.getElementById('poetry-container').style.display = 'none';
+            }, 45000); 
         }
     </script>
 </body>
