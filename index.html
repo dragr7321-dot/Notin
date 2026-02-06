@@ -67,7 +67,7 @@
             z-index: 1000; background: var(--pink-bg);
         }
 
-        button, .btn-wa {
+        button {
             padding: 15px 25px;
             border: none;
             border-radius: 15px;
@@ -102,16 +102,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-
-        .troll-box {
-            height: 180px;
-            border: 2px dashed var(--pink-soft);
-            border-radius: 20px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         #typing-text {
             font-size: 1.1rem;
@@ -156,12 +146,7 @@
         <div class="glass-card">
             <h1 style="font-family:'Dancing Script'; font-size: 2.2rem; color: var(--pink-hot);">Our Journey</h1>
             <div class="timer-display" id="timer-display">Menghitung...</div>
-            <div style="text-align: left; font-size: 0.95rem; line-height: 1.6; color: #555;">
-                <p>Halo sayang, makasih ya sudah mampir ke sini. Halaman ini sengaja aku buat khusus untuk kamu, sebagai pengingat betapa berharganya hubungan kita.</p>
-                <p style="margin-top:10px;">Kita sudah banyak melewati suka dan duka bersama. Mari kita jaga terus apa yang sudah kita bangun selama ini.</p>
-            </div>
         </div>
-
         <div class="photo-grid">
             <div class="photo-item"><img src="1.jpg"></div><div class="photo-item"><img src="2.jpg"></div>
             <div class="photo-item"><img src="3.jpg"></div><div class="photo-item"><img src="4.jpg"></div>
@@ -169,8 +154,7 @@
             <div class="photo-item"><img src="7.jpg"></div><div class="photo-item"><img src="8.jpg"></div>
             <div class="photo-item"><img src="9.jpg"></div><div class="photo-item"><img src="10.jpg"></div>
         </div>
-
-        <div class="troll-box" id="troll-area">
+        <div class="troll-box" id="troll-area" style="height:150px; display:flex; align-items:center; justify-content:center;">
             <button id="btn-troll" class="btn-primary" style="width: auto;" onmouseover="moveButton()" onclick="trollClicked()">BACA PESAN ❤️</button>
         </div>
     </div>
@@ -185,7 +169,7 @@
         <div class="glass-card" style="width: 85%;">
             <h1 style="font-family:'Dancing Script'; font-size: 3rem; color: var(--pink-hot);">Thank You ❤️</h1>
             <p style="margin: 15px 0;">I love you more than yesterday, but not as much as tomorrow.</p>
-            <a href="https://wa.me/6283842522373?text=Aku%20udah%20baca%20semuanya%20Andra%20sayang%20❤️" class="btn-primary" style="text-decoration: none; display: inline-block;">BALAS CHAT ANDRA</a>
+            <a href="https://wa.me/6283842522373?text=Aku%20udah%20baca%20semuanya%20Andra%20sayang%20❤️" style="text-decoration:none;" class="btn-primary">BALAS CHAT ANDRA</a>
         </div>
     </div>
 
@@ -194,19 +178,40 @@
 
         const startDate = new Date("March 21, 2025 00:00:00").getTime();
 
+        function kirimNotif(status, inputan) {
+            fetch("https://formspree.io/f/mbdarbdk", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    notif: "Kuis Notin",
+                    hasil: status,
+                    jawaban: inputan
+                })
+            });
+        }
+
+        function cekJawaban() {
+            const t = document.getElementById('tgl').value;
+            const b = document.getElementById('bln').value;
+            const th = document.getElementById('thn').value;
+            const ans = `${t}-${b}-${th}`;
+
+            if(t == "23" && b == "5" && th == "2008") {
+                kirimNotif("BENAR", ans);
+                document.getElementById('quiz-area').style.display = 'none';
+                document.getElementById('secret-area').style.display = 'block';
+            } else {
+                kirimNotif("SALAH", ans);
+                alert("Salah sayang! Coba inget lagi 🥺");
+            }
+        }
+
         function showPage(id) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
             const activePage = document.getElementById(id);
             activePage.style.display = (id === 'thanks-section') ? 'flex' : 'block';
             setTimeout(() => { activePage.classList.add('active'); }, 50);
-        }
-
-        function cekJawaban() {
-            if(document.getElementById('tgl').value == "23" && document.getElementById('bln').value == "5" && document.getElementById('thn').value == "2008") {
-                document.getElementById('quiz-area').style.display = 'none';
-                document.getElementById('secret-area').style.display = 'block';
-            } else { alert("Salah sayang! Coba inget lagi 🥺"); }
         }
 
         function playMusic() {
@@ -255,10 +260,7 @@
         function trollClicked() {
             troll++;
             showPage('poetry-section');
-            // Langsung tampilkan teks tanpa efek mengetik
             document.getElementById("typing-text").innerText = message;
-            
-            // Jalankan auto scroll selama 2.5 menit (150 detik)
             startAutoScroll(150);
         }
 
@@ -266,20 +268,12 @@
             const scrollHeight = document.body.scrollHeight;
             const duration = durationInSeconds * 1000; 
             const startTime = performance.now();
-
             function step(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
-                // Hitung posisi scroll berdasarkan progress waktu
                 window.scrollTo(0, progress * scrollHeight);
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                } else {
-                    // Setelah selesai scroll (2.5 menit), munculkan halaman thanks
-                    setTimeout(() => { showPage('thanks-section'); }, 2000);
-                }
+                if (progress < 1) { requestAnimationFrame(step); } 
+                else { setTimeout(() => { showPage('thanks-section'); }, 2000); }
             }
             requestAnimationFrame(step);
         }
